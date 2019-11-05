@@ -1,6 +1,8 @@
 package com.zhj.model;
 
 //import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -17,7 +19,7 @@ public class Deal implements Serializable {
     private static final long serialVersionUID = 1562364526537211258L;
     private Integer id;//主键
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 处理从	前端到后端的时间
-  //  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")// 处理从	后端到前端的时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")// 处理从	后端到前端的时间
     private Date balancedate;//结算日 期
     private String customername;//客户名称
     private String area;//区域
