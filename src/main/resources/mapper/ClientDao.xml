@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhj.dao.ClientDao" >
+<insert id="Add">
+      insert into client(id,province,customername,typeid,trader,traderphone,salesman,salescalls,agent,agentnumber) values()
+  </insert>
+  <update id="Update">
+      update  client set province=#{province},customername=#{customername},typeid=#{typeid},trader=#{trader},traderphone=#{traderphone},salesman=#{salesman},salescalls=#{salescalls},agent=#{agent},agentnumber=#{agentnumber}
+  </update>
+  <delete id="Delete">
+      delete  from  client where id=#{id}
+  </delete>
+    <delete id="BatchDelete">
+        delete from  client  where id in
+        <foreach collection="array"  item="id" open="(" separator="," close=")"  >
+             #{id}
+        </foreach>
+    </delete>
+    <select id="QueryUsers" resultType="com.zhj.model.Deal">
+        select  *  from deal where
+        <if test="s != null and s != '' ">
+              balancedate like #{s}
+        </if>
+    </select>
+    <update id="Password">
+        update users set password=#{password} where id =#{id}
+    </update>
+    <insert id="AddDeclare">
+      insert into  declar(declaretime,electrotime,electro,days,lastmonth,explain,status) values(#{declaretime},#{electrotime},#{electro},#{days},#{lastmonth},#{explain},#{status})
+    </insert>
+ <insert id="AddDeclar">
+    insert into  declar(declaretime,electrotime,electro,days,samemoth,explain,status) values(#{declaretime},#{electrotime},#{electro},#{days},#{samemoth},#{explain},#{status})
+ </insert>
+    <select id="Query">
+        select  * from select * from client c,type y,trader t,salesman s,agent a where c.typeid=y.id and c.agentid=a.id and c.traderid=t.id and c.salesmanid=s.id
+         <if test="p.salesman != null and p.salesman!=0">
+           and  salesmanid=#{p.salesman}
+         </if>
+         <if test="p.trader!=null and p.trader!=0">
+             and traderid =#{p.trader}
+         </if>
+         <if test="p.agent!=null and p.agent!=0">
+             and agentid= #{p.agent}
+         </if>
+        limit #{page},#{size}
+    </select>
+
+</mapper>

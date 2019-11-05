@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhj.dao.UserDao" >
+<select id="LoginUser" resultType="com.zhj.model.User">
+  select  *  from  user where username=#{username} and password=#{password}
+  </select>
+   <update id="Update">
+    update  users set thistime=#{time} where id=#{id}
+ </update>
+   <select id="Tree" resultType="com.zhj.model.Jurisdiction">
+     select j.* from user u, user_role s, role r,role_jurisdiction o,jurisdiction j where u.id=s.userid and r.roleid=s.roleid and o.roleid=s.roleid and o.jurisdictionid=j.id and u.id=#{id}
+    </select>
+    <select id="Total" resultType="java.lang.Integer">
+        select count(*) from users u,type t where u.typeid=t.id
+    </select>
+    <insert id="AddUser">
+        insert  into  users(calculate,name,cellphone,typeid,enterprise,password,thistime,lasttime,status) values(#{calculate},#{name},#{cellphone},#{typeid},#{enterprise},#{password},#{status})
+    </insert>
+      <select id="Query" resultType="com.zhj.model.Users">
+             select * from users u,type t,client c where  u.typeid=t.id and u.enterpriseid=c.id and u.id=#{id}
+        </select>
+    <update id="UpdateUser">
+        update users set calculate=#{calculate},name=#{name},cellphone=#{cellphone},typeid=#{typeid},#{enterprise},#{password} where id=#{id}
+    </update>
+  <select id="Login" resultType="com.zhj.model.User">
+ select  * from user u,department d where d.id=u.departmentid and u.id=#{id}
+ </select>
+   <select id="LoginUsers" resultType="com.zhj.model.Users">
+ select * from users where password=#{password} and calculate=#{calculate}
+  union
+select * from users where password=#{password} and cellphone=#{cellphone}
+    </select>
+  <select id="QueryUser" resultType="com.zhj.model.Users">
+        select * from users u,type t,client c where  u.typeid=t.id and u.enterpriseid=c.id
+        <if test="p.enterprise!=null and p.enterprise != ''">
+            and c.enterprise like  #{p.enterprise}
+        </if>
+        <if test="p.name!=null and p.name!=''">
+            and  u.name like #{p.name}
+        </if>
+        <if test="p.status!=null and p.status !=0">
+            and  u.status=#{p.status}
+        </if>
+        limit #{page},#{rows}
+    </select>
+    <select id="query" resultType="com.zhj.model.User">
+      select * from user u,role r, user_role a,department d where u.departmentid=d.id and u.id=a.userid and r.roleid=a.roleid
+    </select>
+    <select id="total" resultType="java.lang.Integer">
+        select count(*) from user u,role r, user_role a,department d where u.departmentid=d.id and u.id=a.userid and r.roleid=a.roleid
+    </select>
+    <insert id="add">
+        insert into user() values()
+    </insert>
+    <update id="update">
+        update user set
+    </update>
+    <delete id="delete">
+     delete from user  where id=#{id}
+ </delete>
+    <delete id="Delete">
+        delete  from users where id=#{id}
+    </delete>
+    <delete id="BatchDelete">
+        delete from users where
+        <foreach collection="array"  item="id" open="(" separator="," close=")"  >
+            #{id}
+        </foreach>
+    </delete>
+    <select id="rtotal" resultType="java.lang.Integer">
+        select  count(*) from role
+    </select>
+    <select id="QueryRole" resultType="com.zhj.model.Role">
+         select * from role limit #{page},#{rows}
+    </select>
+    <delete id="RoleUser">
+        delete  from  role  where roleid=#{id}
+    </delete>
+    <delete id="RoleBatchDelete">
+        delete from role where roleid in
+        <foreach collection="array"  item="id" open="(" separator="," close=")"  >
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="BatchDeleteUser">
+        delete from user where id in
+        <foreach collection="array"  item="id" open="(" separator="," close=")"  >
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="AddRole">
+        insert into role() values()
+    </insert>
+    <update id="UpdateRole">
+        update  role   set
+    </update>
+    <select id="QueryTotal" resultType="java.lang.Integer">
+     select  count(*) from department
+    </select>
+    <select id="QueryDepartment" resultType="com.zhj.model.Department">
+     select  * from department  limit #{page},#{rows}
+    </select>
+    <insert id="AddDepartment">
+        insert into department() values()
+    </insert>
+    <update id="UpdateDepartment">
+        update  department set
+    </update>
+    <delete id="DeleteDepartment">
+        delete from department where id=#{id}
+    </delete>
+    <delete id="BatchDeleteDepartment">
+        delete from  department where id  in
+        <foreach collection="array"  item="id" open="(" separator="," close=")"  >
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
