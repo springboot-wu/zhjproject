@@ -14,13 +14,13 @@
         select count(*) from users u,type t where u.typeid=t.id
     </select>
     <insert id="AddUser">
-        insert  into  users(calculate,name,cellphone,typeid,enterprise,password,thistime,lasttime,status) values(#{calculate},#{name},#{cellphone},#{typeid},#{enterprise},#{password},#{status})
+        insert  into  users(id,calculate,name,cellphone,typeid,enterpriseid,password,thistime,lasttime,status,region) values(#{id},#{calculate},#{name},#{cellphone},#{typeid},#{enterpriseid},#{password},#{thistime},#{lasttime},#{status},#{region})
     </insert>
       <select id="Query" resultType="com.zhj.model.Users">
              select * from users u,type t,client c where  u.typeid=t.id and u.enterpriseid=c.id and u.id=#{id}
         </select>
     <update id="UpdateUser">
-        update users set calculate=#{calculate},name=#{name},cellphone=#{cellphone},typeid=#{typeid},#{enterprise},#{password} where id=#{id}
+        update users set calculate=#{calculate},name=#{name},cellphone=#{cellphone},typeid=#{typeid},enterpriseid=#{enterpriseid},password=#{password},status=#{status} where id=#{id}
     </update>
   <select id="Login" resultType="com.zhj.model.User">
  select  * from user u,department d where d.id=u.departmentid and u.id=#{id}
@@ -41,16 +41,18 @@ select * from users where password=#{password} and cellphone=#{cellphone}
         <if test="p.status!=null and p.status !=0">
             and  u.status=#{p.status}
         </if>
+        group  by u.thistime #{p.sort}
         limit #{page},#{rows}
     </select>
     <select id="query" resultType="com.zhj.model.User">
-      select * from user u,role r, user_role a,department d where u.departmentid=d.id and u.id=a.userid and r.roleid=a.roleid
+    	      select * from user u,role r, department d where u.departmentid=d.id and u.roleid=r.roleid
+    	      limit #{page},#{rows}
     </select>
     <select id="total" resultType="java.lang.Integer">
         select count(*) from user u,role r, user_role a,department d where u.departmentid=d.id and u.id=a.userid and r.roleid=a.roleid
     </select>
     <insert id="add">
-        insert into user() values()
+        insert into user(id,username,phone,password,thistime,lasttime,accountstatus,departmentid,name,roleid) values(#{id},#{username},#{phone},#{password},#{thistime},#{lasttime},#{accountstatus},#{departmentid},#{name},#{roleid})
     </insert>
     <update id="update">
         update user set
@@ -115,4 +117,10 @@ select * from users where password=#{password} and cellphone=#{cellphone}
             #{id}
         </foreach>
     </delete>
+    <update id="Status">
+      update  users set status=#{status} where id=#{id}
+    </update>
+    <update id="status">
+      update  users set status=#{status} where id=#{id}
+    </update>
 </mapper>

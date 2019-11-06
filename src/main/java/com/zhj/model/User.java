@@ -1,7 +1,5 @@
 package com.zhj.model;
 
-//import com.fasterxml.jackson.annotation.JsonFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,26 +18,33 @@ public class User implements Serializable {
     private static final long serialVersionUID = 8281159851632066509L;
     private  Integer id;//主键
     private  String username; //账号
-    private  String name; //姓名
     private  String phone;//电话
     private  String password;//密码
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 处理从	前端到后端的时间
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")// 处理从	后端到前端的时间
-    private Date thistime;//本次登录时间
+    private String thistime;//本次登录时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 处理从	前端到后端的时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")// 处理从	后端到前端的时间
     private  Date  lasttime;//最后登录时间
-    private  String  region;//登陆地址
     private  Integer accountstatus;//账号状态
     private  Integer departmentid;//部门关联id
+    private  String name; //姓名
+    private  Integer roleid;//角色id
+    private  String  region;//登陆地址
     private  String department;//部门名称(零时字段)
     private  String rolename;//角色名称(零时字段)
 
-    public Date getThistime() {
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    public String getThistime() {
         return thistime;
     }
 
-    public void setThistime(Date thistime) {
+    public void setThistime(String thistime) {
         this.thistime = thistime;
     }
 
@@ -135,11 +140,13 @@ public class User implements Serializable {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
-                ", thistime=" + thistime +
+                ", thistime='" + thistime + '\'' +
                 ", lasttime=" + lasttime +
                 ", region='" + region + '\'' +
+                ", roleid=" + roleid +
                 ", accountstatus=" + accountstatus +
                 ", departmentid=" + departmentid +
                 ", department='" + department + '\'' +

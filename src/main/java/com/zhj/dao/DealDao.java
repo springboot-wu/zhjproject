@@ -4,19 +4,16 @@ import com.zhj.model.Deal;
 import com.zhj.model.Users;
 import com.zhj.util.ParamUtil;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * @author ： 朱友
+ * @author ： 朱福
  * @date ：Created in 2019/10/24 17:03
  * @description：
  * @package ：com.zhj.dao
  * @version:
  */
-
 public interface DealDao {
     void Add(Deal d);
 

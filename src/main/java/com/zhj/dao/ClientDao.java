@@ -3,22 +3,19 @@ package com.zhj.dao;
 import com.zhj.model.Client;
 import com.zhj.model.Deal;
 import com.zhj.model.Declare;
+import com.zhj.model.Users;
 import com.zhj.util.ParamUtil;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 /**
- * @author ： 朱友
+ * @author ： 朱福
  * @date ：Created in 2019/10/22 11:31
  * @description：
  * @package ：com.zhj.dao
  * @version:
  */
-
 public interface ClientDao {
     void Add(Client c);
 
@@ -39,4 +36,7 @@ public interface ClientDao {
     Integer Total(ParamUtil param);
 
     List<Declare> Query(@Param("page") Integer page, @Param("size") Integer size,@Param("p")ParamUtil param);
+
+    List<Users> Message(Integer id);
+    List<Users> QueryPassword(Integer id);
 }

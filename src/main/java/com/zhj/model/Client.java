@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Client implements Serializable {
     private static final long serialVersionUID = -8796712011181718822L;
     private  Integer id; //主键
-    private  Integer province; //省份
+    private  Integer province;//省份
     private  Integer customername; //客户名称
     private  Integer typeid; //用户类型id
     private  Integer traderid;//交易员id

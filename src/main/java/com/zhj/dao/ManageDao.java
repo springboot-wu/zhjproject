@@ -4,19 +4,16 @@ import com.zhj.model.Declare;
 import com.zhj.model.Users;
 import com.zhj.util.ParamUtil;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * @author ： 朱友
+ * @author ： 朱福
  * @date ：Created in 2019/10/22 11:51
  * @description：
  * @package ：com.zhj.dao
  * @version:
  */
-
 public interface ManageDao {
     void Add(Declare d);
 

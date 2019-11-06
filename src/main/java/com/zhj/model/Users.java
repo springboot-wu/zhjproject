@@ -1,7 +1,5 @@
 package com.zhj.model;
 
-//import com.fasterxml.jackson.annotation.JsonFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,8 +31,15 @@ public class Users implements Serializable {
     private  Integer  status;//是否启用 1是启用  2是不启用
     private  String typename;//类型名称(零时使用字段)
     private  String  customername;//所属企业(零时使用字段)
+    private  String  traderphone;//交易原电话(零时字段)
 
+    public String getTraderphone() {
+        return traderphone;
+    }
 
+    public void setTraderphone(String traderphone) {
+        this.traderphone = traderphone;
+    }
 
     public String getTypename() {
         return typename;

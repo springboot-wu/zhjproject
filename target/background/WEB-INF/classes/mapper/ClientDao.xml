@@ -44,5 +44,10 @@
          </if>
         limit #{page},#{size}
     </select>
-
+<select id="Message" resultType="com.zhj.model.Users">
+   select * from users u, trader t,type e  where u.traderid=t.id and u.typeid=e.id and u.id=#{id}
+</select>
+    <select id="QueryPassword" resultType="com.zhj.model.Users">
+select * from  users where  id=#{id}
+ </select>
 </mapper>

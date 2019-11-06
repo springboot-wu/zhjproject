@@ -23,6 +23,42 @@ public class ParamUtil implements Serializable {
     private  Integer salesman;//销售负责人
     private  Integer agent;//代理商
     private  Integer trader;//交易员
+    private  Integer id;//公众号修改状态id
+    private  Integer state;//是否启用
+    private  Integer sort;//排序
+    private String time;//时间
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getSalesman() {
         return salesman;

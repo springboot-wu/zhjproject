@@ -3,14 +3,14 @@ package com.zhj.service;
 import com.zhj.dao.ClientDao;
 import com.zhj.model.Client;
 import com.zhj.model.Deal;
-
 import com.zhj.model.Declare;
+import com.zhj.model.Users;
 import com.zhj.util.LikeUtil;
 import com.zhj.util.ParamUtil;
-import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,7 +51,11 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Deal> QueryUsers(String da) {
-        String s = LikeUtil.LikeCha(da);
+        SimpleDateFormat sim=new SimpleDateFormat("yyyy-MM");
+        ParsePosition pos = new ParsePosition(0);
+        Date parse = sim.parse(da, pos);
+        String format = sim.format(parse);
+        String s = LikeUtil.LikeCha(format);
         return clientDao.QueryUsers(s);
     }
 
@@ -93,5 +97,14 @@ public class ClientServiceImpl implements ClientService {
         return ma;
     }
 
+    @Override
+    public List<Users> Message(Integer id) {
 
+        return clientDao.Message(id);
+    }
+
+    @Override
+    public List<Users> QueryPassword(Integer id) {
+        return clientDao.QueryPassword(id);
+    }
 }

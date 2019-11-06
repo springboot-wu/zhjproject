@@ -11,15 +11,15 @@ import java.io.Serializable;
  */
 public class Role implements Serializable {
     private static final long serialVersionUID = 1220099726930222123L;
-    private  Integer id;//主键
+    private  Integer roleid;//主键
     private  String rolename;//角色名称
 
-    public Integer getId() {
-        return id;
+    public Integer getRoleid() {
+        return roleid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
     }
 
     public String getRolename() {
@@ -33,7 +33,7 @@ public class Role implements Serializable {
     @Override
     public String toString() {
         return "Role{" +
-                "id=" + id +
+                "roleid=" + roleid +
                 ", rolename='" + rolename + '\'' +
                 '}';
     }

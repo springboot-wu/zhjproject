@@ -3,6 +3,7 @@ package com.zhj.service;
 import com.zhj.model.Client;
 import com.zhj.model.Deal;
 import com.zhj.model.Declare;
+import com.zhj.model.Users;
 import com.zhj.util.ParamUtil;
 
 import java.util.List;
@@ -33,4 +34,8 @@ public interface ClientService {
     void AddDeclare(Declare declare);
 
     Map Query(ParamUtil param);
+
+    List<Users> Message(Integer id);
+
+    List<Users> QueryPassword(Integer id);
 }

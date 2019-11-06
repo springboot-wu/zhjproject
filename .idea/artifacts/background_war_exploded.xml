@@ -42,8 +42,8 @@
           <element id="library" level="project" name="Maven: org.apache.xmlbeans:xmlbeans:2.6.0" />
           <element id="library" level="project" name="Maven: stax:stax-api:1.0.1" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.2" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">

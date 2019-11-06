@@ -68,4 +68,6 @@ public interface UserService {
     void DeleteDepartment(Integer id);
 
     void BatchDeleteDepartment(String[] id);
+
+    void Status(ParamUtil param);
 }

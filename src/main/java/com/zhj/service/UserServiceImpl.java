@@ -85,11 +85,15 @@ public class UserServiceImpl implements UserService{
         param.setName(s);
         param.setEnterprise(s1);
         List<Users> users=userDao.QueryUser(page,param.getSize(),param);
-        Map ma=new HashMap();
-        ma.put("total",total);
-        ma.put("data",users);
-        return ma;
-    }
+            Map ma=new HashMap();
+            ma.put("total",total);
+            ma.put("data",users);
+            return ma;
+        }
+
+
+
+
 
     @Override
     public Map Users(ParamUtil param) {
@@ -104,6 +108,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void add(User u) {
+        Date da=new Date();
+        SimpleDateFormat sim=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time=sim.format(da);
+        u.setThistime(time);
         userDao.add(u);
 
     }
@@ -194,4 +202,14 @@ public class UserServiceImpl implements UserService{
     public void BatchDeleteDepartment(String[] id) {
         userDao.BatchDeleteDepartment(id);
     }
+
+    @Override
+    public void Status(ParamUtil param) {
+        if (param.getState()==1){
+            userDao.Status(param.getStatus(),param.getId());
+        }else{
+            userDao.status(param.getStatus(),param.getId());
+        }
+    }
+
 }
