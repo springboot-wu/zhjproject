@@ -23,7 +23,7 @@ public interface ManageDao {
 
     Integer Total(ParamUtil param);
 
-    List<Declare> Query(@Param("page") Integer page, @Param("rows") Integer rows,@Param("p") ParamUtil param);
+    List<Declare> Query(@Param("page") Integer page, @Param("rows") Integer rows, @Param("p") ParamUtil param);
 
     void BatchDelete(String[] id);
 

@@ -29,7 +29,7 @@ public interface ClientService {
     List<Deal> QueryUsers(String da);
 
 
-    void Password(String password, Integer id);
+
 
     void AddDeclare(Declare declare);
 
@@ -38,4 +38,13 @@ public interface ClientService {
     List<Users> Message(Integer id);
 
     List<Users> QueryPassword(Integer id);
+
+
+    Users Password(String oldpassword, Integer id);
+
+    void OldPassword(String password, Integer id);
+
+    List<Deal> More(ParamUtil param);
+
+    Map DateTime();
 }

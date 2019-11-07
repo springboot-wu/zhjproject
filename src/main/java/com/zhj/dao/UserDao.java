@@ -78,7 +78,7 @@ public interface UserDao {
     void BatchDeleteDepartment(String[] id);
 
 
-    void Status(@Param("status") Integer status,@Param("id") Integer id);
+    void Status(@Param("status") Integer status, @Param("id") Integer id);
 
-    void status(@Param("status")Integer status, @Param("id")Integer id);
+    void status(@Param("status") Integer status, @Param("id") Integer id);
 }

@@ -25,5 +25,5 @@ public interface DealDao {
 
     Integer Total(ParamUtil param);
 
-    List<Users> Query(@Param("page") Integer page,@Param("rows") Integer rows,@Param("p") ParamUtil param);
+    List<Users> Query(@Param("page") Integer page, @Param("rows") Integer rows, @Param("p") ParamUtil param);
 }

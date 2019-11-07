@@ -33,6 +33,24 @@ public class Deal implements Serializable {
     private double totaldiscount;//合计优惠金额
     private String remake;//备注
     private  double bias;//允许偏差电量
+    private  Integer declareid;//申报id
+    private  String electro;//申报电量(零时字段)
+
+    public Integer getDeclareid() {
+        return declareid;
+    }
+
+    public void setDeclareid(Integer declareid) {
+        this.declareid = declareid;
+    }
+
+    public String getElectro() {
+        return electro;
+    }
+
+    public void setElectro(String electro) {
+        this.electro = electro;
+    }
 
     public double getBias() {
         return bias;

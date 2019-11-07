@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -97,20 +98,24 @@ public class ClientController {
     //公众号修改密码
     @RequestMapping("Password")
     @ResponseBody
-    public  String Password(String password, HttpServletRequest request){
+    public  String Password(@RequestBody ParamUtil param,HttpServletRequest request){
             Users users = (Users) request.getSession().getAttribute("users");
-        try {
-            clientService.Password(password,users.getId());
-            return "1";
-        } catch(Exception e){
-            e.printStackTrace();
-            return "2";
-        }
+
+            Users  u=clientService.Password(param.getOldpassword(),users.getId());
+             if (u==null){
+               return "1";
+             }else {
+                 clientService.OldPassword(param.getPassword(),u.getId());
+                 return "2";
+             }
+
+
 
     }
     //导出excel方法 （数据库查询数据 使用封装工具类导出）
     @RequestMapping("exportExcel")
-    public String exportExcel(HttpServletResponse response,@RequestBody ParamUtil param){
+    public void exportExcel(@RequestBody ParamUtil param,HttpServletResponse response){
+
         //导出的excel的标题
         String title = "电力结算优惠单";  //自定义
         //导出excel的自定义列名
@@ -119,25 +124,25 @@ public class ClientController {
         List<Object[]>  dataList = new ArrayList<Object[]>();
 
         //查询的数据库的信息
-        List<Deal> list= clientService.QueryUsers(param.getTime()); //查询
+        List<Deal> list= clientService.QueryUsers(param.getDate()); //查询
 
         //循环数据库查到的信息
         for(Deal c:list){
             Object[] obj =new Object[rowName.length];  //new 对象数组
-            obj[0]=c.getElectric();
-            obj[1]=c.getPractical();
+            obj[1]=c.getElectric();
+            obj[2]=c.getPractical();
            // SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //时间类型转化
            //String format = sdf.format(c.getDeclaretime());
-            obj[2]=c.getPower();
-            obj[3]=c.getDeviationratio();
-            obj[4]=c.getBias();
-            obj[5]=c.getAssess();
-            obj[6]=c.getDeviation();
-            obj[7]=c.getUserfees();
-            obj[8]=c.getCompanyexpense();
-            obj[9]=c.getDiscount();
-            obj[10]=c.getTotaldiscount();
-            obj[11]=c.getRemake();
+            obj[3]=c.getPower();
+            obj[4]=c.getDeviationratio();
+            obj[5]=c.getBias();
+            obj[6]=c.getAssess();
+            obj[7]=c.getDeviation();
+            obj[8]=c.getUserfees();
+            obj[9]=c.getCompanyexpense();
+            obj[10]=c.getDiscount();
+            obj[11]=c.getTotaldiscount();
+            obj[12]=c.getRemake();
             dataList.add(obj);  //将数组对象 放入定义的list里
         }
 
@@ -145,11 +150,11 @@ public class ClientController {
         ExportExcel exportExcel =new ExportExcel(title,rowName,dataList,response);
         try {
             exportExcel.export();
-            return "1";
+
         } catch (Exception e) {
 
             e.printStackTrace();
-            return "2";
+
         }
     }
   //公众号电力申报新增
@@ -164,20 +169,33 @@ public class ClientController {
             return "2";
         }
     }
-
     //公众号用户信息
     @RequestMapping("Message")
     @ResponseBody
-    public List<Users> Message(HttpServletRequest request){
-        Users users = (Users) request.getSession().getAttribute("users");
+    public List<Users> Message(HttpSession session){
+
+        System.err.println(session.getId()+"888888888888");
+        Users users = (Users) session.getAttribute("users");
         return clientService.Message(users.getId());
 
     }
-    //密码查询
+  //密码查询
     @RequestMapping("QueryPassword")
     @ResponseBody
-    public List<Users> QueryPassword(HttpServletRequest request){
-        Users us= (Users) request.getSession().getAttribute("users");
-        return  clientService.QueryPassword(us.getId());
+    public List<Users> QueryPassword(HttpSession session) {
+        Users us = (Users) session.getAttribute("users");
+        return clientService.QueryPassword(us.getId());
+    }
+    //历史更多
+    @RequestMapping("More")
+    @ResponseBody
+    public  List<Deal> More(@RequestBody ParamUtil param){
+       return clientService.More(param);
+    }
+    //公众号申报时间
+    @RequestMapping("DateTime")
+    @ResponseBody
+    public Map DateTime(){
+        return clientService.DateTime();
     }
 }

@@ -22,9 +22,9 @@
               balancedate like #{s}
         </if>
     </select>
-    <update id="Password">
-        update users set password=#{password} where id =#{id}
-    </update>
+    <select id="Password" resultType="com.zhj.model.Users">
+        select  * from users where password=#{oldpassword} and id=#{id}
+    </select>
     <insert id="AddDeclare">
       insert into  declar(declaretime,electrotime,electro,days,lastmonth,explain,status) values(#{declaretime},#{electrotime},#{electro},#{days},#{lastmonth},#{explain},#{status})
     </insert>
@@ -48,6 +48,27 @@
    select * from users u, trader t,type e  where u.traderid=t.id and u.typeid=e.id and u.id=#{id}
 </select>
     <select id="QueryPassword" resultType="com.zhj.model.Users">
-select * from  users where  id=#{id}
- </select>
+   select * from  users where  id=#{id}
+    </select>
+    <update id="OldPassword">
+        update  users set  password=#{password} where id=#{id}
+    </update>
+    <select id="More" resultType="com.zhj.model.Deal">
+     select * from deal d,declar r where d.declareid=r.id
+     <if test="p.year!=null and p.year !=''">
+       and   d.balancedate like #{p.year}
+     </if> order by d.balancedate desc
+    </select>
+    <select id="da" resultType="java.lang.String">
+     select date_add(CURDATE(),interval - day(curdate()) + 5 day)
+    </select>
+    <select id="time" resultType="java.lang.String">
+select date_add(CURDATE(),interval - day(curdate()) + 15 day)
+    </select>
+    <select id="date" resultType="java.lang.String">
+        select date_add(curdate() - day(curdate()) +1,interval 1 month )
+    </select>
+    <select id="tim" resultType="java.lang.String">
+select  last_day(date_add(curdate(),interval 1 month ))
+    </select>
 </mapper>

@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-//import org.springframework.stereotype.Controller;
-
-//import org.springframework.stereotype.Controller;
 
 /**
  * @author ： 朱福
@@ -55,6 +52,7 @@ public class UserController {
 
       }
   }
+
 
    // 权限菜单查询
      @RequestMapping("Tree")
@@ -143,7 +141,7 @@ public class UserController {
   //公众号登陆
   @RequestMapping("LoginUsers")
   @ResponseBody
-    public Map LoginUsers(@RequestBody Users users,HttpServletRequest request){
+    public Map LoginUsers(@RequestBody Users users,HttpSession session){
         Users users1=userService.LoginUsers(users);
 
         Map map=new HashMap();
@@ -156,9 +154,12 @@ public class UserController {
            map.put("status","201");
          return map;
        }else {
-           request.getSession().setAttribute("users",users1);
+
+           System.err.println(session.getId()+"999999999999999");
+           session.setAttribute("users",users1);
            map.put("status","200");
            map.put("success","登录成功");
+           map.put("data",users1);
            return map;
        }
   }

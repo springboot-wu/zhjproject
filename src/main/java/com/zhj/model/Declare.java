@@ -32,6 +32,7 @@ public class Declare implements Serializable {
     private String calculate;//公众号账号(零时字段)
     private  String customername;//客户名称(零时字段)
 
+
     public String getType() {
         return type;
     }

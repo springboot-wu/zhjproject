@@ -27,16 +27,29 @@ public interface ClientDao {
 
     List<Deal> QueryUsers(@Param("s") String s);
 
-    void Password(@Param("password") String password, @Param("id") Integer id);
+    Users Password(@Param("oldpassword") String oldpassword, @Param("id") Integer id);
 
     void AddDeclare(@Param("declar") Declare declare);
 
-    void AddDeclar(@Param("declar")Declare declare);
+    void AddDeclar(@Param("declar") Declare declare);
 
     Integer Total(ParamUtil param);
 
-    List<Declare> Query(@Param("page") Integer page, @Param("size") Integer size,@Param("p")ParamUtil param);
+    List<Declare> Query(@Param("page") Integer page, @Param("size") Integer size, @Param("p") ParamUtil param);
 
     List<Users> Message(Integer id);
+
     List<Users> QueryPassword(Integer id);
+
+    void OldPassword(@Param("password") String password, @Param("id") Integer id);
+
+    List<Deal> More(@Param("p") ParamUtil param);
+
+    String da();
+
+    String time();
+
+    String date();
+
+    String tim();
 }
