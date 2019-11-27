@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhj.dao.RoleDao" >
+
+    <!--=============================================================================-->
+    <insert id="saveRole" parameterType="com.zhj.entity.ZhjRole" keyProperty="roleID" useGeneratedKeys="true">
+          insert into zhj_role
+          <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="roleID != null">
+               roleID,
+           </if>
+           <if test="roleName != null">
+               roleName,
+           </if>
+          </trim>
+         <trim prefix="values(" suffix=")" suffixOverrides=",">
+          <if test="roleID != null">
+              #{roleID},
+          </if>
+           <if test="roleName != null">
+               #{roleName},
+           </if>
+         </trim>
+    </insert>
+
+     <!--查询角色的列表-->
+    <select id="queryRoleList" resultType="com.zhj.entity.ZhjRole">
+        select roleID, roleName from zhj_role order by roleID asc
+          LIMIT #{page.offset}, #{page.pageSize} ;
+        ;
+    </select>
+  <select id="countForRoleList" resultType="java.lang.Integer">
+       select count(1) from zhj_role
+  </select>
+    <!--删除单个角色-->
+    <delete id="deleteRoleByPrimaryKey" parameterType="java.lang.Integer">
+             delete from zhj_role
+            roleID deptId=#{roleID}
+  </delete>
+    <!--根据角色id 删除 角色 权限中间表-->
+    <delete id="deleteRoleAndPopedom" parameterType="java.lang.Integer">
+            delete from zhj_role_popedom
+            where roleID = #{roleId}
+    </delete>
+    <!--批量删除角色-->
+    <delete id="batchdeleteRole" parameterType="java.util.List">
+        delete  from zhj_role where roleID
+        in
+        <foreach collection="idList" item="roleID" open="(" close=")" separator=",">
+            #{roleID}
+        </foreach>
+    </delete>
+   <!-- 批量删除角色权限中间表-->
+    <delete id="deleteRoleAndPopedomByIdList" parameterType="java.util.List">
+        delete  from zhj_role zhj_role_popedom  where roleID
+        in
+        <foreach collection="idList" item="roleID" open="(" close=")" separator=",">
+            #{roleID}
+        </foreach>
+
+    </delete>
+    <!--根据 角色 id 查询  -->
+    <select id="selectRoleById" resultType="com.zhj.entity.ZhjRole">
+             select roleID,roleName from zhj_role
+            where roleID=#{roleID}
+     </select>
+     <!--根据 角色 id 修改 -->
+    <update id="updateRoleById">
+        update  zhj_role
+         set roleName = #{roleName}
+        where roleID = #{roleID}
+    </update>
+
+</mapper>

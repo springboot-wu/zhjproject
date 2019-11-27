@@ -1,5 +1,7 @@
 package com.zhj.model;
 
+import lombok.Builder;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,7 @@ import java.io.Serializable;
  * @package ：com.zhj.model
  * @version:
  */
+@Builder
 public class Department implements Serializable {
     private static final long serialVersionUID = 8983013826319672879L;
     private  Integer id; //主键

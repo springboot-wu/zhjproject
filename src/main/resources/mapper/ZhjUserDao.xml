@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhj.dao.ZhjUserDao" >
+    <resultMap id="User" type="com.zhj.entity.ZhjUser">
+        <id column="userID" property="userID"/>
+        <result column="loginName" property="loginName"/>
+        <result column="userName" property="userName"/>
+        <result column="mobile" property="mobile"/>
+        <result column="status" property="status"/>
+        <result column="isDuty" property="isDuty"/>
+        <result column="roleName" property="roleName"/>
+        <association property="zhjDept" javaType="com.zhj.entity.ZhjDept">
+            <id column="deptId" property="deptId"/>
+            <result column="deptName" property="deptName"/>
+        </association>
+    </resultMap>
+    <!--=============================================================================-->
+
+    <select id="zhjUserList" resultMap="User">
+        select zu.userID,zu.loginName,zu.userName,zu.mobile,zu.status,zu.isDuty,zd.deptId,zd.deptName,zr.roleName
+        ,zu.isDuty from zhj_user  zu
+        left JOIN
+        zhj_user_role zur ON
+        zu.userID = zur.userId
+        LEFT JOIN   zhj_dept zd
+        on  zu.deptId = zd.deptID
+        LEFT JOIN   zhj_role  zr
+        on   zur.roleId = zr.roleID
+        where 1=1
+        <if test="name !=null">
+            and   zu.userName = #{name}
+        </if>
+        <if test="deptId !=null">
+            and zd.deptID= #{deptId}
+        </if>
+         order by zu.onDutyDate desc
+        LIMIT #{page.offset}, #{page.pageSize} ;
+        <!--   <if test="name !=null">
+               where name = #{name}
+           </if>-->
+    </select>
+
+    <select id="countByUserNameAndDeptId" resultType="java.lang.Integer">
+        select count(1) from zhj_user
+        where 1=1
+        <if test="name !=null">
+            and   userName = #{name}
+        </if>
+        <if test="deptId !=null">
+            and deptId = #{deptId}
+        </if>
+
+    </select>
+    <!--删除单个用户-->
+    <delete id="deleteUserByPrimaryKey" parameterType="java.lang.Integer">
+   delete  from zhj_user
+   where userID =#{userId}
+  </delete>
+    <!--批量删除用户-->
+    <delete id="batchdeleteUsers" parameterType="java.util.List">
+        delete  from zhj_user where userID
+        in
+        <foreach collection="idList" item="userID" open="(" close=")" separator=",">
+            #{userID}
+        </foreach>
+    </delete>
+
+
+
+
+    <!--添加用户-->
+    <insert id="insertSelective" parameterType="com.zhj.entity.ZhjUser" keyProperty="userID" useGeneratedKeys="true">
+        insert into zhj_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userID != null" >
+                userID,
+            </if>
+            <if test="loginName != null" >
+                loginName,
+            </if>
+            <if test="loginPwd != null" >
+                loginPwd,
+            </if>
+            <if test="zhjDept.deptId != null" >
+                deptId,
+            </if>
+            <if test="userName != null" >
+                userName,
+            </if>
+            <if test="mobile != null" >
+                mobile,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="isDuty != null" >
+                isDuty,
+            </if>
+            <if test="onDutyDate != null" >
+                onDutyDate,
+            </if>
+            <if test="offDutyDate != null" >
+                offDutyDate,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="logonState != null" >
+                logonState,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userID != null" >
+                #{userID,jdbcType=INTEGER},
+            </if>
+            <if test="loginName != null" >
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPwd != null" >
+                #{loginPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="zhjDept.deptId  != null" >
+                #{zhjDept.deptId ,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null" >
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="isDuty != null" >
+                #{isDuty,jdbcType=VARCHAR},
+            </if>
+
+            <if test="onDutyDate != null" >
+                #{onDutyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="offDutyDate != null" >
+                #{offDutyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="logonState != null" >
+                #{logonState,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="saveUserRoleId">
+       insert  into  zhj_user_role(userId,roleId)
+        values (#{userId},#{roleId})
+    </insert>
+
+    <select id="selectByUserId" resultMap="User">
+         select zu.userID,zu.loginName,zu.userName,zu.mobile,zu.status,zu.isDuty,zd.deptId,zd.deptName,zr.roleID, zr.roleName
+         ,zu.isDuty from zhj_user  zu
+        left JOIN
+        zhj_user_role zur ON
+        zu.userID = zur.userID
+        LEFT JOIN   zhj_dept zd
+        on  zu.deptId = zd.deptID
+        LEFT JOIN   zhj_role  zr
+        on   zur.roleID = zr.roleID
+        where 1=1
+        and zu.userID =#{userId}
+     </select>
+
+    <update id="updateZhjUser" parameterType="com.zhj.entity.ZhjUser">
+        update  zhj_user
+        <set>
+            <if test="loginName != null">
+                loginName =#{loginName},
+            </if>
+            <if test="loginPwd != null">
+                loginPwd =#{loginPwd},
+            </if>
+            <if test="zhjDept.deptId != null">
+                deptId =#{zhjDept.deptId},
+            </if>
+            <if test="userName != null">
+                userName =#{userName},
+            </if>
+            <if test="mobile != null">
+                mobile =#{mobile},
+            </if>
+            <if test="status != null">
+                status =#{status},
+            </if>
+            <if test="isDuty != null">
+                isDuty =#{isDuty},
+            </if>
+            <if test="onDutyDate != null">
+                onDutyDate =#{onDutyDate},
+            </if>
+            <if test="offDutyDate != null">
+                offDutyDate =#{offDutyDate},
+            </if>
+            <if test="remark != null">
+                remark =#{remark},
+            </if>
+            <if test="logonState != null">
+                logonState =#{logonState}
+            </if>
+        </set>
+        where userID = #{userID}
+    </update>
+
+    <!--删除用户角色中间表-->
+    <delete id="delUserRoleByUserId">
+      delete  from zhj_user_role
+       where userId =#{userId}
+    </delete>
+    <!--批量删除用户角色中间表-->
+    <delete id="batchdeleteUsersAndRole" parameterType="java.util.List">
+        delete  from zhj_user_role where userId
+        in
+        <foreach collection="listUserId" item="userId" open="(" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </delete>
+</mapper>

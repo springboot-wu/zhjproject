@@ -10,6 +10,7 @@ com\zhj\util\CORSFilter.class
 com\zhj\dao\ClientDao.class
 com\zhj\util\LikeUtil.class
 com\zhj\model\Region.class
+com\zhj\aop\LogginAspectJ.class
 com\zhj\model\Users.class
 com\zhj\model\Deal.class
 com\zhj\service\ClientServiceImpl.class

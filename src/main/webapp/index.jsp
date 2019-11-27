@@ -9,11 +9,11 @@
 <body>
 
 
-<form name="Form2" action="./Manage/fileUpload" method="post"  enctype="multipart/form-data">
-    <%--<form name="Form2" action="./Client/exp" method="post"  enctype="multipart/form-data">--%>
+<%--<form name="Form2" action="./Manage/fileUpload" method="post"  enctype="multipart/form-data">
+    &lt;%&ndash;<form name="Form2" action="./Client/exp" method="post"  enctype="multipart/form-data">&ndash;%&gt;
     <h1>采用multipart提供的file.transfer方法上传文件</h1>
     <input type="file" name="file">
-    <input type="submit" value="upload"/>
+    <input type="submit" value="upload"/>--%>
 </form>
 
 

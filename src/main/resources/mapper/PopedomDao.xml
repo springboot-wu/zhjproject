@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhj.dao.PopedomDao" >
+     <sql id="Base_Column_List">
+       MID, NAME,pid,level,seq,url,icon,target,isparent,isMenu
+     </sql>
+
+    <select id="getAllPopedom" resultType="com.zhj.entity.ZhjPopedom">
+    
+      select <include refid="Base_Column_List"/>
+           from  zhj_popedom  where
+           mid in
+           <foreach collection="midList" item="mid" open="(" close=")" separator=",">
+               #{mid}
+           </foreach>
+           and isMenu =1
+    </select>
+     <!--查询所有的权限集合-->
+    <select id="findPopedomList" resultType="com.zhj.entity.ZhjPopedom">
+          select <include refid="Base_Column_List"/>
+        from  zhj_popedom
+    </select>
+     <!--据角色id 查询 权限集合-->
+    <select id="findPopedomCollectionByRoleId" resultType="com.zhj.entity.ZhjPopedom">
+          select roleID, mid,pid from zhj_role_popedom
+          where roleID = #{roleId}
+    </select>
+
+  <!--  保存角色 权限中间表-->
+   <insert id="saveRolePopedom" >
+            insert into zhj_role_popedom(roleID,mid)
+            values
+            <foreach collection="podIdList" item="mid" index="index" separator=",">
+               (#{roleId},#{mid})
+            </foreach>
+     </insert>
+</mapper>

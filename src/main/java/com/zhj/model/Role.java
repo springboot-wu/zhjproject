@@ -1,5 +1,9 @@
 package com.zhj.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +13,9 @@ import java.io.Serializable;
  * @package ：com.zhj.model
  * @version:
  */
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role implements Serializable {
     private static final long serialVersionUID = 1220099726930222123L;
     private  Integer roleid;//主键

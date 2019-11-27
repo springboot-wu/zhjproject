@@ -1,6 +1,7 @@
 package com.zhj.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.Date;
  * @package ：com.zhj.model
  * @version:
  */
-
+@Builder
 public class User implements Serializable {
     private static final long serialVersionUID = 8281159851632066509L;
     private  Integer id;//主键

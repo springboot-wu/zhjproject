@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhj.dao.DeptDao" >
+    <!--<resultMap id="User" type="com.zhj.entity.ZhjUser">
+        <id column="userID" property="userID"/>
+        <result column="loginName" property="loginName"/>
+        <result column="userName" property="userName"/>
+        <result column="mobile" property="mobile"/>
+        <result column="status" property="status"/>
+        <result column="isDuty" property="isDuty"/>
+        <result column="roleName" property="roleName"/>
+        <association property="zhjDept" javaType="com.zhj.entity.ZhjDept">
+            <id column="deptId" property="deptId"/>
+            <result column="deptName" property="deptName"/>
+        </association>
+    </resultMap>-->
+
+    <!--=============================================================================-->
+    <insert id="saveDept" parameterType="com.zhj.entity.ZhjDept" keyProperty="deptId" useGeneratedKeys="true">
+          insert into zhj_dept
+          <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="deptId != null">
+               deptId,
+           </if>
+           <if test="deptName != null">
+               deptName,
+           </if>
+          </trim>
+         <trim prefix="values(" suffix=")" suffixOverrides=",">
+          <if test="deptId != null">
+              #{deptId},
+          </if>
+           <if test="deptName != null">
+               #{deptName},
+           </if>
+         </trim>
+    </insert>
+
+     <!--查询部门的列表-->
+    <select id="queryDeptList" resultType="com.zhj.entity.ZhjDept">
+        select deptId, deptName from zhj_dept order by deptId asc
+          LIMIT #{page.offset}, #{page.pageSize} ;
+        ;
+    </select>
+    <select id="countForDeptList" resultType="java.lang.Integer">
+        select count(1) from zhj_dept
+    </select>
+    <!--删除单个部门-->
+    <delete id="deleteDeptByPrimaryKey" parameterType="java.lang.Integer">
+             delete from zhj_dept
+            where deptId=#{deptId}
+  </delete>
+    <!--批量删除部门-->
+    <delete id="batchdeleteDept" parameterType="java.util.List">
+        delete  from zhj_dept where deptId
+        in
+        <foreach collection="idList" item="deptId" open="(" close=")" separator=",">
+            #{deptId}
+        </foreach>
+    </delete>
+    <!--根据 部门 id 查询 部门-->
+    <select id="selectDepthById" resultType="com.zhj.entity.ZhjDept">
+             select deptId,deptName from zhj_dept
+            where deptId=#{deptId}
+     </select>
+     <!--根据 部门 id 修改部门-->
+    <update id="updateDeptById">
+        update  zhj_dept
+         set deptName = #{deptName}
+        where deptId = #{deptId}
+    </update>
+
+</mapper>
